@@ -4,7 +4,7 @@ import setAuthToken from "../utils/setAuthToken";
 
 import { setAlert } from "./alert";
 import * as types from "./types";
-axios.defaults.baseURL = process.env.API_ENDPOINT;
+axios.defaults.baseURL = "https://kins-memo.herokuapp.com/";
 // auth and load user
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {

@@ -1,6 +1,6 @@
 import axios from "axios";
 const setAuthToken = (token) => {
-  axios.defaults.baseURL = process.env.API_ENDPOINT;
+  axios.defaults.baseURL = "https://kins-memo.herokuapp.com/";
   if (token) {
     axios.defaults.headers["Authorization"] = `Bearer ${token}`;
   } else {

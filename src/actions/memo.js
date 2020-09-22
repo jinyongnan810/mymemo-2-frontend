@@ -2,7 +2,8 @@ import axios from "axios";
 
 import { setAlert } from "./alert";
 import * as types from "./types";
-axios.defaults.baseURL = process.env.API_ENDPOINT;
+axios.defaults.baseURL = "https://kins-memo.herokuapp.com/";
+console.log(process.env.API_ENDPOINT);
 // load memos
 export const loadMemos = (id) => async (dispatch) => {
   try {
