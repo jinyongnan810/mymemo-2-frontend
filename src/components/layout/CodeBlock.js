@@ -30,6 +30,7 @@ SyntaxHighlighter.registerLanguage("json", json);
 SyntaxHighlighter.registerLanguage("protobuf", protobuf);
 SyntaxHighlighter.registerLanguage("yaml", yaml);
 SyntaxHighlighter.registerLanguage("html", yaml);
+SyntaxHighlighter.registerLanguage("html", yaml);
 
 class CodeBlock extends PureComponent {
   static propTypes = {
@@ -43,7 +44,7 @@ class CodeBlock extends PureComponent {
     const { language, value } = this.props;
     return (
       <SyntaxHighlighter
-        language={language}
+        language={language ? language : "bash"}
         style={vsDark}
         showLineNumbers={true}
         wrapLines
