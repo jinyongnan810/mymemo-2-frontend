@@ -14,6 +14,14 @@ const ListItem = ({
   const [title, setTitle] = useState(memo.title);
   const setCurrent = (id) => {
     setCurrentMemo(id);
+    scrollToTop();
+  };
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
   const remove = (id) => {
     if (window.confirm("Are you sure to delete this memo?")) {
