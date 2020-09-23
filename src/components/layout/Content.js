@@ -126,7 +126,7 @@ const Content = ({ memo, updateMemo, isAuthenticated }) => {
       <div className="k-editor-container" onDoubleClick={(e) => toggleEdit()}>
         <div className={edting ? "k-content" : "k-content hide"}>
           <textarea
-            className="k-editor"
+            className="k-editor hide-scrollbar"
             id="k-editor"
             onChange={(e) => editContent(e.target.value)}
             onKeyDown={(e) => onKeyDown(e)}
