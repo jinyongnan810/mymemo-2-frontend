@@ -11,7 +11,9 @@ export class Alert extends Component {
     const { alert, theAlert } = this.props;
     if (theAlert && theAlert.id !== previousProps.id) {
       if (theAlert.type === "success") {
-        alert.success(theAlert.msg);
+        alert.success(
+          <div style={{ textTransform: "initial" }}>{theAlert.msg}</div>
+        );
       } else {
         alert.error(`${theAlert.msg}`);
         console.error(`${theAlert.msg}`);

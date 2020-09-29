@@ -14,6 +14,7 @@ const Dashboard = ({ auth, memo, loadMemos, logout }) => {
   const [showLogin, toggleShowLogin] = useState(false);
   useEffect(() => {
     loadMemos();
+    // eslint-disable-next-line
   }, []);
 
   const scrollToTop = () => {

@@ -6,8 +6,18 @@ import { updateMemo } from "../../actions/memo";
 import CodeBlock from "./CodeBlock";
 import Moment from "react-moment";
 import moment from "moment";
-
-const Content = ({ memo, updateMemo, isAuthenticated }) => {
+import { setAlert } from "../../actions/alert";
+let loadingCount = 0;
+let timer;
+const loadingMsg = [
+  "Server warming up...",
+  "Please Wait a few seconds...",
+  "It usually takes about 40s...",
+  "Finishing warming up...",
+  "Hmm...This is interesting...",
+  "I'm sorry.There is somthing wrong...",
+];
+const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
   const { currentMemo, loading } = memo;
   const [edting, toggleEditing] = useState(false);
   const [content, editContent] = useState("");
@@ -19,6 +29,22 @@ const Content = ({ memo, updateMemo, isAuthenticated }) => {
       }
       editContent(currentMemo.content);
     }
+    if (loading) {
+      timer = setInterval(() => {
+        if (loadingCount >= loadingMsg.length) {
+          setAlert(`${loadingMsg[loadingMsg.length - 1]}`);
+        } else {
+          setAlert(`${loadingMsg[loadingCount]}`);
+          loadingCount++;
+        }
+      }, 10000);
+    } else {
+      clearInterval(timer);
+      if (loadingCount > 0) {
+        setAlert(`Thank you for your patience!`);
+      }
+    }
+    // eslint-disable-next-line
   }, [loading, currentMemo]);
 
   // events
@@ -162,6 +188,7 @@ Content.propTypes = {
   memo: PropTypes.object.isRequired,
   updateMemo: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(null, { updateMemo })(Content);
+export default connect(null, { updateMemo, setAlert })(Content);
