@@ -29,6 +29,10 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
       }
       editContent(currentMemo.content);
     }
+    // eslint-disable-next-line
+  }, [currentMemo]);
+
+  useEffect(() => {
     if (loading) {
       timer = setInterval(() => {
         if (loadingCount >= loadingMsg.length) {
@@ -45,7 +49,7 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
       }
     }
     // eslint-disable-next-line
-  }, [loading, currentMemo]);
+  }, [loading]);
 
   // events
   const onKeyDown = (e) => {
