@@ -3,7 +3,9 @@ import axios from "axios";
 import { setAlert } from "./alert";
 import * as types from "./types";
 axios.defaults.baseURL = "https://kins-memo.herokuapp.com/";
-console.log(process.env.API_ENDPOINT);
+console.log(
+  "You can contact and make friends with me via yuunan.kin@gmail.com~"
+);
 // load memos
 export const loadMemos = (id) => async (dispatch) => {
   try {
