@@ -76,3 +76,8 @@ export const createMemo = (memo) => async (dispatch) => {
     }
   }
 };
+
+// search memos
+export const searchMemo = (word) => (dispatch) => {
+  dispatch({ type: types.CHANGE_SEARCHING_WORD, payload: word });
+};

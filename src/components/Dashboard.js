@@ -8,12 +8,18 @@ import { loadMemos } from "../actions/memo";
 import Login from "./auth/Login";
 import Content from "./layout/Content";
 import List from "./layout/List";
+import SearchBox from "./layout/SearchBox";
 
 const Dashboard = ({ auth, memo, loadMemos, logout }) => {
   const { isAuthenticated } = auth;
   const [showLogin, toggleShowLogin] = useState(false);
+  const [showSearchBox, toggleShowSearchBox] = useState(false);
   useEffect(() => {
+    // load memos
     loadMemos();
+    // bind document event
+    document.addEventListener("keydown", onKeyDown, false);
+
     // eslint-disable-next-line
   }, []);
 
@@ -32,6 +38,22 @@ const Dashboard = ({ auth, memo, loadMemos, logout }) => {
       toggleShowLogin(!showLogin);
     }
   };
+  // key events
+  const onKeyDown = (e) => {
+    var keyCode = e.keyCode || e.which;
+    // f3
+    if (e.keyCode === 114) {
+      e.preventDefault();
+      toggleShowSearchBox(true);
+    }
+    // ctrl+f
+    if (e.ctrlKey || e.metaKey) {
+      if (keyCode === 70) {
+        e.preventDefault();
+        toggleShowSearchBox(true);
+      }
+    }
+  };
 
   return (
     <Fragment>
@@ -44,6 +66,10 @@ const Dashboard = ({ auth, memo, loadMemos, logout }) => {
       </h1>
       <List isAuthenticated={isAuthenticated} memo={memo} />
       <Content isAuthenticated={isAuthenticated} memo={memo} />
+      {showSearchBox && (
+        <SearchBox toggle={toggleShowSearchBox} scrollToTop={scrollToTop} />
+      )}
+
       {isAuthenticated ? <Fragment /> : <Login showLogin={showLogin} />}
     </Fragment>
   );

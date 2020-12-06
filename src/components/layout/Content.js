@@ -153,7 +153,11 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
     );
   } else if (currentMemo) {
     return (
-      <div className="k-editor-container" onDoubleClick={(e) => toggleEdit()}>
+      <div
+        id="content"
+        className="k-editor-container"
+        onDoubleClick={(e) => toggleEdit()}
+      >
         <div className={edting ? "k-content" : "k-content hide"}>
           <textarea
             className="k-editor hide-scrollbar"

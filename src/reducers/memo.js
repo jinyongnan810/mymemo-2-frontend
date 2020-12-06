@@ -53,6 +53,28 @@ export default (state = initialState, action) => {
       }
       return { ...state, memos: memos };
     }
+    case types.CHANGE_SEARCHING_WORD: {
+      const word = action.payload;
+      if (word) {
+        return {
+          ...state,
+          memos: state.memos.map((memo) => {
+            if (
+              memo.title.toLowerCase().indexOf(word) > -1 ||
+              memo.content.toLowerCase().indexOf(word) > -1
+            ) {
+              return { ...memo, searchHit: true };
+            }
+            return { ...memo, searchHit: false };
+          }),
+        };
+      } else {
+        return {
+          ...state,
+          memos: state.memos.map((memo) => ({ ...memo, searchHit: false })),
+        };
+      }
+    }
     default:
       return state;
   }

@@ -40,9 +40,17 @@ const ListItem = ({
     updateMemo({ title: title }, memo.id);
   };
 
+  let className = "k-title";
+  if (isCurrent) {
+    className += " current";
+  }
+  if (memo.searchHit) {
+    className += " hit";
+  }
+
   return (
     <div
-      className={isCurrent ? "k-title current" : "k-title"}
+      className={className}
       key={memo.id}
       onClick={(e) => setCurrent(memo.id)}
     >
@@ -60,7 +68,7 @@ const ListItem = ({
       {isAuthenticated ? (
         <img
           src="imgs/delete.svg"
-          alt="Toggle List..."
+          alt="Delete memo.."
           className="k-title-delete"
           onClick={(e) => remove(memo.id)}
         />
