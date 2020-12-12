@@ -54,7 +54,7 @@ export default (state = initialState, action) => {
       return { ...state, memos: memos };
     }
     case types.CHANGE_SEARCHING_WORD: {
-      const word = action.payload;
+      const word = action.payload.toLowerCase();
       if (word) {
         return {
           ...state,

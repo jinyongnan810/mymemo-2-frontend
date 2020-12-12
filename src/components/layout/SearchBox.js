@@ -13,7 +13,7 @@ const SearchBox = ({ searchMemo, toggle, scrollToTop }) => {
   //   let searchLock = false;
   const onChange = (e) => {
     setWord(e.target.value);
-    searchMemo(word);
+    searchMemo(e.target.value);
     toggleInputChanged(true);
     // regexSearch(e.target.value);
     // if (!searchLock) {
