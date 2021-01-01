@@ -7,6 +7,7 @@ import CodeBlock from "./CodeBlock";
 import Moment from "react-moment";
 import moment from "moment";
 import { setAlert } from "../../actions/alert";
+import FileUploader from "./FileUploader";
 let loadingCount = 0;
 let timer;
 const loadingMsg = [
@@ -19,12 +20,12 @@ const loadingMsg = [
 ];
 const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
   const { currentMemo, loading } = memo;
-  const [edting, toggleEditing] = useState(false);
+  const [editing, toggleEditing] = useState(false);
   const [content, editContent] = useState("");
 
   useEffect(() => {
     if (currentMemo) {
-      if (edting) {
+      if (editing) {
         toggleEditing(false);
       }
       editContent(currentMemo.content);
@@ -81,14 +82,26 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
       }
     }
   };
+  const onDragOver = () => {
+    const uploadEl = document.getElementById("upload");
+    if (uploadEl) {
+      uploadEl.classList.add("show");
+    }
+  };
+  const onDropExit = () => {
+    const uploadEl = document.getElementById("upload");
+    if (uploadEl) {
+      uploadEl.classList.remove("show");
+    }
+  };
   const toggleEdit = () => {
     if (!isAuthenticated) {
       return;
     }
-    if (edting) {
+    if (editing) {
       updateMemo({ content }, currentMemo.id);
     }
-    toggleEditing(!edting);
+    toggleEditing(!editing);
   };
   // key event functions
   const insertColor = () => {
@@ -140,6 +153,16 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
       }
     }, 100);
   };
+  const onUploadFile = (name, link) => {
+    const fileName = name.split(".")[0];
+    const insertStr = `![${fileName}](${link})`;
+    insertToCursorSide(insertStr, "", 2, 2 + fileName.length);
+
+    const uploadEl = document.getElementById("upload");
+    if (uploadEl) {
+      uploadEl.classList.remove("show");
+    }
+  };
 
   if (loading) {
     return (
@@ -157,8 +180,13 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
         id="content"
         className="k-editor-container"
         onDoubleClick={(e) => toggleEdit()}
+        onDragOver={(e) => onDragOver()}
+        onDragExit={(e) => onDropExit()}
+        onDragEnd={(e) => onDropExit()}
+        onDrop={(e) => onDropExit()}
       >
-        <div className={edting ? "k-content" : "k-content hide"}>
+        {editing ? <FileUploader onUploadFile={onUploadFile} /> : ""}
+        <div className={editing ? "k-content" : "k-content hide"}>
           <textarea
             className="k-editor hide-scrollbar"
             id="k-editor"
@@ -167,7 +195,7 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
             value={content}
           ></textarea>
         </div>
-        <div className={edting ? "k-content hide" : "k-content"}>
+        <div className={editing ? "k-content hide" : "k-content"}>
           <div className="k-updated-time">
             Last updated at:&nbsp;
             <Moment format="GG.M.D kk:mm">
