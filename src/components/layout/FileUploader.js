@@ -3,7 +3,6 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import ZropZone from "react-dropzone";
 import config from "../../config/config";
-import { Fragment } from "react";
 
 const FileUploader = ({ onUploadFile }) => {
   const onPhotoSelected = async (files) => {
@@ -11,14 +10,16 @@ const FileUploader = ({ onUploadFile }) => {
 
     for (let file of files) {
       const fileName = file.name;
-      const uploadInfo = {
-        upload_preset: config.CLOUD_PRESET,
-        file: file,
-        multiple: true,
-        tags: "kin's page photo",
-        context: `photo=${fileName}`,
+      var fd = new FormData();
+      fd.append("upload_preset", config.CLOUD_PRESET);
+      fd.append("tags", "kin's page photo"); // Optional - add tag for image admin in Cloudinary
+      fd.append("multiple", true);
+      fd.append("context", `photo=${fileName}`);
+      fd.append("file", file);
+      const cfg = {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
       };
-      const res = await axios.post(url, uploadInfo);
+      const res = await axios.post(url, fd, cfg);
       if (res.status === "400") {
         console.log("Upload Error:", res);
       }
