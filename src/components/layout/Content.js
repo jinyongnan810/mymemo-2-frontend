@@ -18,7 +18,14 @@ const loadingMsg = [
   "Hmm...This is interesting...",
   "I'm sorry.There is somthing wrong...",
 ];
-const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
+const Content = ({
+  memo,
+  updateMemo,
+  isAuthenticated,
+  setAlert,
+  signature,
+  timestamp,
+}) => {
   const { currentMemo, loading } = memo;
   const [editing, toggleEditing] = useState(false);
   const [content, editContent] = useState("");
@@ -185,7 +192,15 @@ const Content = ({ memo, updateMemo, isAuthenticated, setAlert }) => {
         onDragEnd={(e) => onDropExit()}
         onDrop={(e) => onDropExit()}
       >
-        {editing ? <FileUploader onUploadFile={onUploadFile} /> : ""}
+        {editing ? (
+          <FileUploader
+            onUploadFile={onUploadFile}
+            signature={signature}
+            timestamp={timestamp}
+          />
+        ) : (
+          ""
+        )}
         <div className={editing ? "k-content" : "k-content hide"}>
           <textarea
             className="k-editor hide-scrollbar"
@@ -225,6 +240,13 @@ Content.propTypes = {
   updateMemo: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   setAlert: PropTypes.func.isRequired,
+  signature: PropTypes.string.isRequired,
+  timestamp: PropTypes.number.isRequired,
 };
 
-export default connect(null, { updateMemo, setAlert })(Content);
+const mapPropsToState = (state) => ({
+  signature: state.auth.signature,
+  timestamp: state.auth.timestamp,
+});
+
+export default connect(mapPropsToState, { updateMemo, setAlert })(Content);

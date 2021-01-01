@@ -4,6 +4,8 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  signature: "",
+  timestamp: 0,
 };
 export default (state = initialState, action) => {
   const { type, payload } = action;
