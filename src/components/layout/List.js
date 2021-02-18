@@ -6,7 +6,7 @@ import ListItem from "./ListItem";
 const List = ({ memo, isAuthenticated }) => {
   const { memos, currentMemo, loading } = memo;
   return (
-    <div className="k-sidebar-container">
+    <div className="k-sidebar-container" id="k-sidebar-container">
       <div className="k-arrow">
         <img
           src="imgs/right.svg"
