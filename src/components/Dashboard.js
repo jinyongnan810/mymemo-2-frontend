@@ -20,8 +20,7 @@ const Dashboard = ({ auth, memo, loadMemos, logout }) => {
     loadMemos();
     // bind document event
     document.addEventListener("keydown", onKeyDown, false);
-    sidebar = document.getElementById("k-sidebar");
-    sidebar.addEventListener("scroll", onScroll, false);
+    window.addEventListener("scroll", onScroll, false);
 
     // eslint-disable-next-line
   }, []);
@@ -34,17 +33,20 @@ const Dashboard = ({ auth, memo, loadMemos, logout }) => {
     });
   };
 
-  let sidebarContainerEl;
+  let contentEl;
   const onScroll = (e) => {
     let fadeoutBottom = true;
     let fadeoutTop = true;
-    if (e.target.scrollHeight <= e.target.scrollTop + window.innerHeight + 50) {
+    if (
+      document.body.scrollHeight <=
+      window.scrollY + window.innerHeight + 50
+    ) {
       fadeoutBottom = false;
     } else {
       fadeoutBottom = true;
     }
 
-    if (e.target.scrollTop <= 50) {
+    if (window.scrollY <= 50) {
       fadeoutTop = false;
     } else {
       fadeoutTop = true;
@@ -57,15 +59,15 @@ const Dashboard = ({ auth, memo, loadMemos, logout }) => {
         : fadeoutBottom
         ? "fadeout-bottom"
         : "";
-    if (!sidebarContainerEl) {
-      sidebarContainerEl = document.getElementById("k-sidebar-container");
+    if (!contentEl) {
+      contentEl = document.getElementById("content-display");
     }
     if (cls) {
-      // sidebarContainerEl.className = `k-sidebar-container ${cls}`;
+      // contentEl.classList.remove("fadeout-both");
+      // contentEl.classList.remove("fadeout-top");
+      // contentEl.classList.remove("fadeout-bottom");
+      // contentEl.classList.add(cls);
     }
-    console.log(
-      `e.target.scrollHeight:${e.target.scrollHeight},sidebar.scrollTop:${sidebar.scrollTop},window.innerHeight:${window.innerHeight}`
-    );
   };
 
   const login = () => {

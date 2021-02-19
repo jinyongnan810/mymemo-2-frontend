@@ -185,7 +185,7 @@ const Content = ({
     return (
       <div
         id="content"
-        className="k-editor-container"
+        className="k-editor-container fadeout-both"
         onDoubleClick={(e) => toggleEdit()}
         onDragOver={(e) => onDragOver()}
         onDragExit={(e) => onDropExit()}
@@ -210,7 +210,10 @@ const Content = ({
             value={content}
           ></textarea>
         </div>
-        <div className={editing ? "k-content hide" : "k-content"}>
+        <div
+          id="content-display"
+          className={editing ? "k-content hide" : "k-content"}
+        >
           <div className="k-updated-time">
             Last updated at:&nbsp;
             <Moment format="GG.M.D kk:mm">
